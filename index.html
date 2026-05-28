@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nr. Lyndelse Tagdækning A/S – Professionelt Tagarbejde</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --charcoal: #1a1a1a;
+      --slate: #2c3140;
+      --rust: #b84a1e;
+      --rust-light: #d4622e;
+      --sand: #e8dcc8;
+      --sand-light: #f5f0e8;
+      --white: #fafaf8;
+      --mid: #6b7280;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Barlow', sans-serif;
+      background: var(--white);
+      color: var(--charcoal);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 4rem;
+      background: rgba(26,26,26,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .nav-logo {
+      display: flex; flex-direction: column; line-height: 1;
+    }
+    .nav-logo span:first-child {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem; letter-spacing: 0.18em; color: var(--rust);
+      text-transform: uppercase;
+    }
+    .nav-logo strong {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem; color: var(--white);
+      letter-spacing: 0.02em;
+    }
+    .nav-links {
+      display: flex; gap: 2.5rem; list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.8rem; font-weight: 500; letter-spacing: 0.1em;
+      text-transform: uppercase; color: rgba(255,255,255,0.7);
+      text-decoration: none; transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--rust-light); }
+    .nav-cta {
+      background: var(--rust); color: var(--white) !important;
+      padding: 0.55rem 1.4rem; border-radius: 2px;
+      transition: background .2s !important;
+    }
+    .nav-cta:hover { background: var(--rust-light) !important; color: var(--white) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: var(--slate);
+      position: relative; overflow: hidden;
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center;
+    }
+    .hero-pattern {
+      position: absolute; inset: 0;
+      background-image:
+        repeating-linear-gradient(135deg, rgba(255,255,255,0.015) 0, rgba(255,255,255,0.015) 1px, transparent 0, transparent 50%);
+      background-size: 30px 30px;
+    }
+    .hero-left {
+      position: relative; z-index: 2;
+      padding: 8rem 4rem 6rem 5rem;
+    }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--rust); margin-bottom: 1.8rem;
+    }
+    .hero-tag::before {
+      content: ''; display: block; width: 2rem; height: 1px; background: var(--rust);
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      color: var(--white); line-height: 1.08;
+      margin-bottom: 1.5rem;
+    }
+    h1 em { font-style: italic; color: var(--sand); }
+    .hero-desc {
+      font-size: 1.05rem; font-weight: 300; line-height: 1.75;
+      color: rgba(255,255,255,0.6); max-width: 32rem;
+      margin-bottom: 2.8rem;
+    }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--rust); color: var(--white);
+      padding: 0.9rem 2.2rem; font-size: 0.85rem; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      text-decoration: none; border-radius: 2px;
+      transition: background .2s, transform .15s;
+    }
+    .btn-primary:hover { background: var(--rust-light); transform: translateY(-1px); }
+    .btn-outline {
+      border: 1px solid rgba(255,255,255,0.3); color: rgba(255,255,255,0.8);
+      padding: 0.9rem 2.2rem; font-size: 0.85rem; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      text-decoration: none; border-radius: 2px;
+      transition: border-color .2s, color .2s;
+    }
+    .btn-outline:hover { border-color: var(--rust-light); color: var(--rust-light); }
+
+    .hero-right {
+      position: relative; z-index: 2; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero-visual {
+      width: 100%; height: 100%; min-height: 100vh;
+      position: relative; overflow: hidden;
+    }
+    .hero-visual svg {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+    }
+    .hero-stats {
+      position: absolute; bottom: 3rem; left: 50%;
+      transform: translateX(-50%);
+      display: flex; gap: 0; z-index: 3;
+      background: rgba(26,26,26,0.85);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+    .stat-box {
+      padding: 1.2rem 2rem; text-align: center;
+      border-right: 1px solid rgba(255,255,255,0.07);
+    }
+    .stat-box:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem; color: var(--rust); display: block;
+    }
+    .stat-lbl {
+      font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(255,255,255,0.5); display: block; margin-top: 0.2rem;
+    }
+
+    /* ── SERVICES ── */
+    .services {
+      padding: 7rem 5rem;
+      background: var(--sand-light);
+    }
+    .section-header { margin-bottom: 4rem; }
+    .section-eyebrow {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--rust); margin-bottom: 1rem;
+    }
+    .section-eyebrow::before {
+      content: ''; display: block; width: 2rem; height: 1px; background: var(--rust);
+    }
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      color: var(--charcoal); line-height: 1.12;
+    }
+    .services-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px;
+      background: rgba(0,0,0,0.08);
+    }
+    .service-card {
+      background: var(--white);
+      padding: 2.8rem 2.5rem;
+      transition: background .25s;
+      cursor: default;
+    }
+    .service-card:hover { background: var(--slate); }
+    .service-card:hover .svc-title,
+    .service-card:hover .svc-desc { color: var(--white); }
+    .service-card:hover .svc-icon { color: var(--rust-light); }
+    .svc-icon {
+      font-size: 2rem; color: var(--rust);
+      margin-bottom: 1.5rem; display: block;
+      transition: color .25s;
+    }
+    .svc-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.2rem; font-weight: 700; letter-spacing: 0.04em;
+      text-transform: uppercase; color: var(--charcoal);
+      margin-bottom: 0.8rem; transition: color .25s;
+    }
+    .svc-desc {
+      font-size: 0.9rem; line-height: 1.7; color: var(--mid);
+      transition: color .25s;
+    }
+
+    /* ── WHY US ── */
+    .why {
+      display: grid; grid-template-columns: 1fr 1fr;
+      min-height: 70vh;
+    }
+    .why-visual {
+      background: var(--slate);
+      position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .why-visual-inner {
+      position: relative; z-index: 2; text-align: center; padding: 3rem;
+    }
+    .big-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 10rem; color: rgba(255,255,255,0.04);
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      white-space: nowrap; user-select: none;
+    }
+    .review-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 2.5rem; max-width: 26rem;
+      text-align: left;
+    }
+    .stars { color: #f59e0b; font-size: 1.1rem; letter-spacing: 0.1em; margin-bottom: 1rem; }
+    .review-text {
+      font-size: 0.95rem; line-height: 1.75; color: rgba(255,255,255,0.75);
+      font-style: italic; margin-bottom: 1.5rem;
+    }
+    .review-author {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--rust);
+    }
+    .why-content {
+      padding: 5rem 5rem;
+      display: flex; flex-direction: column; justify-content: center;
+      background: var(--white);
+    }
+    .why-content h2 { margin-bottom: 2.5rem; }
+    .why-list { list-style: none; display: flex; flex-direction: column; gap: 1.5rem; }
+    .why-item { display: flex; gap: 1.2rem; align-items: flex-start; }
+    .why-bullet {
+      width: 2rem; height: 2rem; min-width: 2rem;
+      background: var(--rust); color: var(--white);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; font-weight: 700; border-radius: 1px;
+    }
+    .why-text strong {
+      display: block; font-weight: 600; margin-bottom: 0.25rem;
+    }
+    .why-text span { font-size: 0.9rem; color: var(--mid); line-height: 1.6; }
+
+    /* ── CONTACT ── */
+    .contact {
+      background: var(--charcoal);
+      padding: 7rem 5rem;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 6rem;
+      align-items: start;
+    }
+    .contact h2 { color: var(--white); margin-bottom: 1.5rem; }
+    .contact-desc {
+      color: rgba(255,255,255,0.5); font-size: 0.95rem;
+      line-height: 1.75; margin-bottom: 3rem;
+    }
+    .contact-info { display: flex; flex-direction: column; gap: 1.5rem; }
+    .contact-row {
+      display: flex; gap: 1rem; align-items: flex-start;
+    }
+    .contact-icon {
+      width: 2.5rem; height: 2.5rem; min-width: 2.5rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem; color: var(--rust);
+    }
+    .contact-detail strong {
+      display: block; font-size: 0.72rem; letter-spacing: 0.15em;
+      text-transform: uppercase; color: rgba(255,255,255,0.3);
+      margin-bottom: 0.25rem;
+    }
+    .contact-detail a, .contact-detail span {
+      color: rgba(255,255,255,0.8); text-decoration: none;
+      font-size: 0.95rem;
+      transition: color .2s;
+    }
+    .contact-detail a:hover { color: var(--rust-light); }
+
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-group label {
+      font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--white); padding: 0.85rem 1rem;
+      font-family: 'Barlow', sans-serif; font-size: 0.9rem;
+      border-radius: 2px; outline: none;
+      transition: border-color .2s;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus { border-color: var(--rust); }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .form-group select option { background: var(--charcoal); }
+    .btn-submit {
+      background: var(--rust); color: var(--white);
+      border: none; padding: 1rem 2.5rem;
+      font-family: 'Barlow', sans-serif; font-size: 0.85rem;
+      font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+      cursor: pointer; border-radius: 2px;
+      transition: background .2s; align-self: flex-start;
+    }
+    .btn-submit:hover { background: var(--rust-light); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #111; padding: 2rem 5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      border-top: 1px solid rgba(255,255,255,0.04);
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      color: rgba(255,255,255,0.4); font-size: 0.9rem;
+    }
+    .footer-copy {
+      font-size: 0.75rem; color: rgba(255,255,255,0.2); letter-spacing: 0.06em;
+    }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a {
+      font-size: 0.75rem; color: rgba(255,255,255,0.3);
+      text-decoration: none; letter-spacing: 0.06em;
+      transition: color .2s;
+    }
+    .footer-links a:hover { color: var(--rust-light); }
+
+    /* ── ANIMATIONS ── */
+    .fade-up {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .hero-left { padding: 8rem 2rem 5rem; }
+      .hero-stats {
+        left: 2rem; transform: none;
+        flex-wrap: wrap;
+      }
+      .services { padding: 5rem 1.5rem; }
+      .services-grid { grid-template-columns: 1fr; }
+      .why { grid-template-columns: 1fr; }
+      .why-visual { min-height: 30rem; }
+      .why-content { padding: 4rem 2rem; }
+      .contact { grid-template-columns: 1fr; padding: 5rem 1.5rem; gap: 3rem; }
+      .form-row { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-logo">
+    <span>Tagdækning & Renovering</span>
+    <strong>NL Tagdækning</strong>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#services">Ydelser</a></li>
+    <li><a href="#om">Om Os</a></li>
+    <li><a href="#kontakt">Kontakt</a></li>
+    <li><a href="tel:+4565957555" class="nav-cta">+45 65 95 75 55</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero" id="top">
+  <div class="hero-pattern"></div>
+  <div class="hero-left">
+    <div class="hero-tag fade-up visible">Odense · Siden 1990'erne</div>
+    <h1 class="fade-up visible">Professionelt<br><em>Tagarbejde</em><br>du kan stole på</h1>
+    <p class="hero-desc fade-up visible">
+      Nr. Lyndelse Tagdækning A/S leverer tagdækning og renovering af højeste kvalitet til private og erhvervskunder på Fyn og i hele Danmark.
+    </p>
+    <div class="hero-actions fade-up visible">
+      <a href="#kontakt" class="btn-primary">Få et tilbud</a>
+      <a href="tel:+4565957555" class="btn-outline">Ring til os</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-visual">
+      <!-- Architectural roof illustration in SVG -->
+      <svg viewBox="0 0 640 900" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <!-- Deep background sky -->
+        <defs>
+          <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#1a2030"/>
+            <stop offset="100%" stop-color="#2c3140"/>
+          </linearGradient>
+          <linearGradient id="roofGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#3a3228"/>
+            <stop offset="100%" stop-color="#2a2420"/>
+          </linearGradient>
+          <linearGradient id="roofShine" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#c0a060" stop-opacity="0.15"/>
+            <stop offset="100%" stop-color="#c0a060" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <rect fill="url(#sky)" width="640" height="900"/>
+        <!-- Stars -->
+        <g fill="rgba(255,255,255,0.5)">
+          <circle cx="80" cy="60" r="1"/><circle cx="200" cy="40" r="1.5"/><circle cx="350" cy="90" r="1"/>
+          <circle cx="500" cy="30" r="1"/><circle cx="580" cy="80" r="1.5"/><circle cx="130" cy="130" r="1"/>
+          <circle cx="450" cy="110" r="1"/><circle cx="300" cy="55" r="1"/>
+        </g>
+
+        <!-- Main house body -->
+        <rect x="80" y="380" width="480" height="520" fill="#2a2e38"/>
+        <!-- Windows -->
+        <rect x="140" y="440" width="90" height="110" fill="#1a1a22" rx="2"/>
+        <rect x="275" y="440" width="90" height="110" fill="#1a1a22" rx="2"/>
+        <rect x="410" y="440" width="90" height="110" fill="#1a1a22" rx="2"/>
+        <!-- Window glow -->
+        <rect x="140" y="440" width="90" height="110" fill="#d4914a" opacity="0.08" rx="2"/>
+        <rect x="275" y="440" width="90" height="110" fill="#e8c87a" opacity="0.12" rx="2"/>
+
+        <!-- Door -->
+        <rect x="260" y="600" width="120" height="300" fill="#1a1e28" rx="2"/>
+        <circle cx="368" cy="755" r="5" fill="#8a7040"/>
+
+        <!-- Main roof -->
+        <polygon points="40,390 320,120 600,390" fill="url(#roofGrad)"/>
+        <polygon points="40,390 320,120 600,390" fill="url(#roofShine)"/>
+
+        <!-- Roof tiles (rows) -->
+        <g opacity="0.4" stroke="#1a1612" stroke-width="0.5">
+          <!-- Row 1 (top) -->
+          <g fill="#4a3e30">
+            <rect x="280" y="125" width="80" height="14" rx="1"/>
+            <rect x="186" y="139" width="80" height="14" rx="1"/>
+            <rect x="357" y="139" width="80" height="14" rx="1"/>
+          </g>
+          <!-- Row 2 -->
+          <g fill="#423830">
+            <rect x="130" y="153" width="80" height="14" rx="1"/>
+            <rect x="213" y="153" width="80" height="14" rx="1"/>
+            <rect x="296" y="153" width="80" height="14" rx="1"/>
+            <rect x="379" y="153" width="80" height="14" rx="1"/>
+            <rect x="462" y="153" width="80" height="14" rx="1"/>
+          </g>
+          <!-- Rows 3–10 (auto pattern) -->
+          <g fill="#3e3428">
+            <rect x="90" y="167" width="80" height="14" rx="1"/>
+            <rect x="173" y="167" width="80" height="14" rx="1"/>
+            <rect x="256" y="167" width="80" height="14" rx="1"/>
+            <rect x="339" y="167" width="80" height="14" rx="1"/>
+            <rect x="422" y="167" width="80" height="14" rx="1"/>
+            <rect x="505" y="167" width="80" height="14" rx="1"/>
+          </g>
+          <g fill="#3a3028">
+            <rect x="65" y="181" width="80" height="14" rx="1"/>
+            <rect x="148" y="181" width="80" height="14" rx="1"/>
+            <rect x="231" y="181" width="80" height="14" rx="1"/>
+            <rect x="314" y="181" width="80" height="14" rx="1"/>
+            <rect x="397" y="181" width="80" height="14" rx="1"/>
+            <rect x="480" y="181" width="80" height="14" rx="1"/>
+            <rect x="563" y="181" width="40" height="14" rx="1"/>
+          </g>
+          <g fill="#362c24">
+            <rect x="50" y="195" width="80" height="14" rx="1"/>
+            <rect x="133" y="195" width="80" height="14" rx="1"/>
+            <rect x="216" y="195" width="80" height="14" rx="1"/>
+            <rect x="299" y="195" width="80" height="14" rx="1"/>
+            <rect x="382" y="195" width="80" height="14" rx="1"/>
+            <rect x="465" y="195" width="80" height="14" rx="1"/>
+            <rect x="548" y="195" width="60" height="14" rx="1"/>
+          </g>
+          <g fill="#322820">
+            <rect x="48" y="209" width="80" height="14" rx="1"/>
+            <rect x="131" y="209" width="80" height="14" rx="1"/>
+            <rect x="214" y="209" width="80" height="14" rx="1"/>
+            <rect x="297" y="209" width="80" height="14" rx="1"/>
+            <rect x="380" y="209" width="80" height="14" rx="1"/>
+            <rect x="463" y="209" width="80" height="14" rx="1"/>
+            <rect x="546" y="209" width="60" height="14" rx="1"/>
+          </g>
+          <g fill="#2e2420">
+            <rect x="46" y="223" width="80" height="14" rx="1"/>
+            <rect x="129" y="223" width="80" height="14" rx="1"/>
+            <rect x="212" y="223" width="80" height="14" rx="1"/>
+            <rect x="295" y="223" width="80" height="14" rx="1"/>
+            <rect x="378" y="223" width="80" height="14" rx="1"/>
+            <rect x="461" y="223" width="80" height="14" rx="1"/>
+            <rect x="544" y="223" width="65" height="14" rx="1"/>
+          </g>
+          <g fill="#2a2018">
+            <rect x="44" y="237" width="80" height="14" rx="1"/>
+            <rect x="127" y="237" width="80" height="14" rx="1"/>
+            <rect x="210" y="237" width="80" height="14" rx="1"/>
+            <rect x="293" y="237" width="80" height="14" rx="1"/>
+            <rect x="376" y="237" width="80" height="14" rx="1"/>
+            <rect x="459" y="237" width="80" height="14" rx="1"/>
+            <rect x="542" y="237" width="67" height="14" rx="1"/>
+          </g>
+          <g fill="#261c18">
+            <rect x="42" y="251" width="80" height="14" rx="1"/>
+            <rect x="125" y="251" width="80" height="14" rx="1"/>
+            <rect x="208" y="251" width="80" height="14" rx="1"/>
+            <rect x="291" y="251" width="80" height="14" rx="1"/>
+            <rect x="374" y="251" width="80" height="14" rx="1"/>
+            <rect x="457" y="251" width="80" height="14" rx="1"/>
+            <rect x="540" y="251" width="68" height="14" rx="1"/>
+          </g>
+          <g fill="#221810">
+            <rect x="42" y="265" width="80" height="14" rx="1"/>
+            <rect x="125" y="265" width="80" height="14" rx="1"/>
+            <rect x="208" y="265" width="80" height="14" rx="1"/>
+            <rect x="291" y="265" width="80" height="14" rx="1"/>
+            <rect x="374" y="265" width="80" height="14" rx="1"/>
+            <rect x="457" y="265" width="80" height="14" rx="1"/>
+            <rect x="540" y="265" width="68" height="14" rx="1"/>
+          </g>
+          <g fill="#1e1610">
+            <rect x="42" y="279" width="80" height="14" rx="1"/>
+            <rect x="125" y="279" width="80" height="14" rx="1"/>
+            <rect x="208" y="279" width="80" height="14" rx="1"/>
+            <rect x="291" y="279" width="80" height="14" rx="1"/>
+            <rect x="374" y="279" width="80" height="14" rx="1"/>
+            <rect x="457" y="279" width="80" height="14" rx="1"/>
+            <rect x="540" y="279" width="68" height="14" rx="1"/>
+          </g>
+          <g fill="#1c1410">
+            <rect x="42" y="293" width="80" height="14" rx="1"/>
+            <rect x="125" y="293" width="80" height="14" rx="1"/>
+            <rect x="208" y="293" width="80" height="14" rx="1"/>
+            <rect x="291" y="293" width="80" height="14" rx="1"/>
+            <rect x="374" y="293" width="80" height="14" rx="1"/>
+            <rect x="457" y="293" width="80" height="14" rx="1"/>
+            <rect x="540" y="293" width="68" height="14" rx="1"/>
+          </g>
+          <g fill="#1a1210">
+            <rect x="42" y="307" width="80" height="14" rx="1"/>
+            <rect x="125" y="307" width="80" height="14" rx="1"/>
+            <rect x="208" y="307" width="80" height="14" rx="1"/>
+            <rect x="291" y="307" width="80" height="14" rx="1"/>
+            <rect x="374" y="307" width="80" height="14" rx="1"/>
+            <rect x="457" y="307" width="80" height="14" rx="1"/>
+            <rect x="540" y="307" width="68" height="14" rx="1"/>
+          </g>
+          <g fill="#180f0a">
+            <rect x="42" y="321" width="80" height="14" rx="1"/>
+            <rect x="125" y="321" width="80" height="14" rx="1"/>
+            <rect x="208" y="321" width="80" height="14" rx="1"/>
+            <rect x="291" y="321" width="80" height="14" rx="1"/>
+            <rect x="374" y="321" width="80" height="14" rx="1"/>
+            <rect x="457" y="321" width="80" height="14" rx="1"/>
+            <rect x="540" y="321" width="68" height="14" rx="1"/>
+          </g>
+          <g fill="#160e0a">
+            <rect x="42" y="335" width="80" height="14" rx="1"/>
+            <rect x="125" y="335" width="80" height="14" rx="1"/>
+            <rect x="208" y="335" width="80" height="14" rx="1"/>
+            <rect x="291" y="335" width="80" height="14" rx="1"/>
+            <rect x="374" y="335" width="80" height="14" rx="1"/>
+            <rect x="457" y="335" width="80" height="14" rx="1"/>
+            <rect x="540" y="335" width="68" height="14" rx="1"/>
+          </g>
+          <g fill="#140c08">
+            <rect x="42" y="349" width="80" height="14" rx="1"/>
+            <rect x="125" y="349" width="80" height="14" rx="1"/>
+            <rect x="208" y="349" width="80" height="14" rx="1"/>
+            <rect x="291" y="349" width="80" height="14" rx="1"/>
+            <rect x="374" y="349" width="80" height="14" rx="1"/>
+            <rect x="457" y="349" width="80" height="14" rx="1"/>
+            <rect x="540" y="349" width="68" height="14" rx="1"/>
+          </g>
+          <g fill="#120a06">
+            <rect x="42" y="363" width="80" height="14" rx="1"/>
+            <rect x="125" y="363" width="80" height="14" rx="1"/>
+            <rect x="208" y="363" width="80" height="14" rx="1"/>
+            <rect x="291" y="363" width="80" height="14" rx="1"/>
+            <rect x="374" y="363" width="80" height="14" rx="1"/>
+            <rect x="457" y="363" width="80" height="14" rx="1"/>
+            <rect x="540" y="363" width="68" height="14" rx="1"/>
+          </g>
+        </g>
+
+        <!-- Ridge cap -->
+        <rect x="300" y="116" width="40" height="12" rx="3" fill="#5a4a38"/>
+        <rect x="290" y="122" width="60" height="8" rx="2" fill="#6a5a45"/>
+
+        <!-- Chimney -->
+        <rect x="430" y="200" width="50" height="190" fill="#302830"/>
+        <rect x="425" y="195" width="60" height="12" fill="#3a3040"/>
+        <!-- Chimney bricks -->
+        <g fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.03)" stroke-width="0.5">
+          <rect x="425" y="207" width="28" height="10"/>
+          <rect x="455" y="207" width="29" height="10"/>
+          <rect x="425" y="219" width="20" height="10"/>
+          <rect x="447" y="219" width="37" height="10"/>
+          <rect x="425" y="231" width="28" height="10"/>
+          <rect x="455" y="231" width="29" height="10"/>
+        </g>
+        <!-- Smoke -->
+        <g opacity="0.15" fill="#aaaaaa">
+          <ellipse cx="455" cy="180" rx="8" ry="12"/>
+          <ellipse cx="450" cy="162" rx="6" ry="10"/>
+          <ellipse cx="458" cy="146" rx="5" ry="8"/>
+        </g>
+
+        <!-- Moon -->
+        <circle cx="520" cy="80" r="28" fill="#d4c8a0" opacity="0.7"/>
+        <circle cx="535" cy="72" r="22" fill="#1a2030" opacity="0.85"/>
+
+        <!-- Ground / grass -->
+        <rect x="0" y="880" width="640" height="20" fill="#1a2810" opacity="0.8"/>
+        <rect x="0" y="875" width="640" height="10" fill="#243318" opacity="0.6"/>
+
+        <!-- Accent brand bar at bottom -->
+        <rect x="0" y="860" width="640" height="3" fill="#b84a1e" opacity="0.6"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat-box">
+      <span class="stat-num">5.0</span>
+      <span class="stat-lbl">Google Rating</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num">30+</span>
+      <span class="stat-lbl">Års erfaring</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num">100%</span>
+      <span class="stat-lbl">Tilfredse kunder</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── SERVICES ── -->
+<section class="services" id="services">
+  <div class="section-header fade-up">
+    <div class="section-eyebrow">Vores ydelser</div>
+    <h2>Alt i tagdækning –<br>ét firma, ét ansvar</h2>
+  </div>
+  <div class="services-grid">
+    <div class="service-card fade-up">
+      <span class="svc-icon">🏠</span>
+      <div class="svc-title">Tagudskiftning</div>
+      <p class="svc-desc">Komplet udskiftning af dit tag med kvalitetsmaterialer. Vi rådgiver om den bedste løsning til dit hus og budget.</p>
+    </div>
+    <div class="service-card fade-up">
+      <span class="svc-icon">🔧</span>
+      <div class="svc-title">Tagrenovering</div>
+      <p class="svc-desc">Forlæng dit tags levetid med professionel renovering. Vi reparerer utætheder, udskifter mørtelfuger og reparerer skader.</p>
+    </div>
+    <div class="service-card fade-up">
+      <span class="svc-icon">🧱</span>
+      <div class="svc-title">Tegltag & Betontagsten</div>
+      <p class="svc-desc">Specialister i tegltag og betontagsten — klassiske, holdbare løsninger der passer til dansk byggeskik og klima.</p>
+    </div>
+    <div class="service-card fade-up">
+      <span class="svc-icon">💧</span>
+      <div class="svc-title">Tagpap & Flade tage</div>
+      <p class="svc-desc">Professionel lægning og reparation af tagpap til flade og lavt hældende tage på både boliger og erhvervsbygninger.</p>
+    </div>
+    <div class="service-card fade-up">
+      <span class="svc-icon">🌿</span>
+      <div class="svc-title">Tagrensning & Behandling</div>
+      <p class="svc-desc">Fjernelse af mos, lav og alger efterfulgt af imprægnering for at beskytte og forlænge tagets levetid markant.</p>
+    </div>
+    <div class="service-card fade-up">
+      <span class="svc-icon">🔍</span>
+      <div class="svc-title">Taginspektion</div>
+      <p class="svc-desc">Grundig gennemgang af dit tag med rapport og anbefalinger. Fang problemer tidligt og undgå dyre skader.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── WHY US ── -->
+<section class="why" id="om">
+  <div class="why-visual">
+    <div class="big-number">A/S</div>
+    <div class="why-visual-inner">
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">
+          "Meget professionelt arbejde fra start til slut. De overholdt tidsplanen, holdt stedet rent og leverede et resultat vi er meget stolte af."
+        </p>
+        <div class="review-author">— Verificeret Google-anmeldelse</div>
+      </div>
+    </div>
+  </div>
+  <div class="why-content">
+    <div class="section-eyebrow">Hvorfor vælge os</div>
+    <h2>Håndværk du<br>kan stole på</h2>
+    <br/>
+    <ul class="why-list">
+      <li class="why-item fade-up">
+        <div class="why-bullet">✓</div>
+        <div class="why-text">
+          <strong>Autoriseret og erfaren</strong>
+          <span>Vi er et autoriseret tagdækningsfirma med årtiers erfaring på Fyn og omegn.</span>
+        </div>
+      </li>
+      <li class="why-item fade-up">
+        <div class="why-bullet">✓</div>
+        <div class="why-text">
+          <strong>Fast pris – ingen overraskelser</strong>
+          <span>Vi afgiver altid en klar og bindende tilbudspris, inden arbejdet begynder.</span>
+        </div>
+      </li>
+      <li class="why-item fade-up">
+        <div class="why-bullet">✓</div>
+        <div class="why-text">
+          <strong>Kvalitetsmaterialer</strong>
+          <span>Vi anvender kun anerkendte materialer fra pålidelige leverandører med dokumenteret holdbarhed.</span>
+        </div>
+      </li>
+      <li class="why-item fade-up">
+        <div class="why-bullet">✓</div>
+        <div class="why-text">
+          <strong>Lokalt forankret</strong>
+          <span>Vi er hjemmehørende på Fyn og kender de lokale byggeforhold og klimakrav til bunds.</span>
+        </div>
+      </li>
+      <li class="why-item fade-up">
+        <div class="why-bullet">✓</div>
+        <div class="why-text">
+          <strong>5 stjerner på Google</strong>
+          <span>Vores kunder er tilfredse — og det er den bedste anbefaling, vi kan give.</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section class="contact" id="kontakt">
+  <div>
+    <div class="section-eyebrow" style="color:var(--rust)">Kontakt os</div>
+    <h2>Klar til et nyt tag?</h2>
+    <p class="contact-desc">
+      Ring til os eller udfyld formularen, så vender vi tilbage hurtigst muligt med et uforpligtende tilbud.
+    </p>
+    <div class="contact-info">
+      <div class="contact-row">
+        <div class="contact-icon">📞</div>
+        <div class="contact-detail">
+          <strong>Telefon</strong>
+          <a href="tel:+4565957555">+45 65 95 75 55</a>
+        </div>
+      </div>
+      <div class="contact-row">
+        <div class="contact-icon">🌐</div>
+        <div class="contact-detail">
+          <strong>Hjemmeside</strong>
+          <a href="http://www.nltag.dk" target="_blank">www.nltag.dk</a>
+        </div>
+      </div>
+      <div class="contact-row">
+        <div class="contact-icon">📍</div>
+        <div class="contact-detail">
+          <strong>Adresse</strong>
+          <span>Industrivej 1, 5260 Odense, Danmark</span>
+        </div>
+      </div>
+      <div class="contact-row">
+        <div class="contact-icon">⏰</div>
+        <div class="contact-detail">
+          <strong>Åbningstider</strong>
+          <span>Mandag–Fredag: 07:00–16:00</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="contact-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Navn</label>
+          <input type="text" placeholder="Dit fulde navn" />
+        </div>
+        <div class="form-group">
+          <label>Telefon</label>
+          <input type="tel" placeholder="+45 XX XX XX XX" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" placeholder="din@email.dk" />
+      </div>
+      <div class="form-group">
+        <label>Ydelse</label>
+        <select>
+          <option value="">Vælg ydelse...</option>
+          <option>Tagudskiftning</option>
+          <option>Tagrenovering</option>
+          <option>Tegltag / Betontagsten</option>
+          <option>Tagpap / Fladt tag</option>
+          <option>Tagrensning</option>
+          <option>Taginspektion</option>
+          <option>Andet</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Besked</label>
+        <textarea placeholder="Beskriv dit projekt kort — adresse, tagtype, ønsket arbejde..."></textarea>
+      </div>
+      <button class="btn-submit" onclick="this.textContent='Sendt ✓'; this.style.background='#2a7a40'; setTimeout(()=>{this.textContent='Send forespørgsel'; this.style.background='';},3000)">
+        Send forespørgsel
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-logo">Nr. Lyndelse Tagdækning A/S</div>
+  <div class="footer-copy">© 2024 NL Tagdækning A/S · CVR: xxxxxxxx · Industrivej 1, 5260 Odense</div>
+  <div class="footer-links">
+    <a href="http://www.nltag.dk" target="_blank">nltag.dk</a>
+    <a href="tel:+4565957555">+45 65 95 75 55</a>
+  </div>
+</footer>
+
+<script>
+  // Intersection observer for fade-up
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Stagger service cards
+  document.querySelectorAll('.service-card').forEach((c, i) => {
+    c.style.transitionDelay = (i * 80) + 'ms';
+  });
+</script>
+</body>
+</html>
